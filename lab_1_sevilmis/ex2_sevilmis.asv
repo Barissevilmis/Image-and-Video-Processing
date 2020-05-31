@@ -1,0 +1,9 @@
+function J = ex2_sevilmis()
+    %% Exercise 2.1 -Images and Color Tables
+
+    % 1 - Read Images
+    trees = imread("Images/trees.tif");
+    lena = imread("Images/lena.tif");
+    imshow(trees);
+    imshow(lena);
+    % 2 - Show Images in Gray level- Invert them

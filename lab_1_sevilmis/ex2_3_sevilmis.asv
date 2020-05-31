@@ -1,0 +1,26 @@
+function J = ex2_3_sevilmis(lena, trees, corr, map_t)
+
+    trees_d = double(trees);
+    lena_d = double(lena);
+    
+    trees_d = trees_d/255.0;
+    lena_d = lena_d/255.0;
+    
+    figure('Name','Ex-2.3: Normalized Image Gamma Correlation');
+    subplot(2,2,1);imshow(trees_d);
+    title('Normalized Trees');
+    subplot(2,2,2);imshow(lena_d);
+    title('Normalized Lena');
+    
+    for i = 1 : size(lena,3) : 1
+        lena_d(:,:,i) = lena_d(:,:,i).^ corr;
+    end
+    
+    map_t(:,:,1) = map_t(:,:,1).^corr;
+    
+    subplot(2,2,3);imshow(uint8(trees_d));
+    title('Gamma Correlated Trees');
+    subplot(2,2,4);imshow(uint8(lena_d));
+    title('Gamma Correlated Lena');
+
+end

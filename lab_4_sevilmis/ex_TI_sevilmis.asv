@@ -1,0 +1,7 @@
+function TI = ex_TI_sevilmis(data)
+
+    [row, col, ch] = size(data);
+    Mn = zeros(row,col,ch);
+    for i = 2 : ch
+    end
+end

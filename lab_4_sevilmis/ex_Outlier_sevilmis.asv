@@ -1,0 +1,28 @@
+function out = ex_Outlier_sevilmis(data)
+
+    Pi = zeros(size(data, 2));
+    Qi = zeros(size(data, 2));
+    
+    for i = 1 : size(data, 2)
+        k = kurtosis(data(:, i));
+        mu = mean(data(: ,i));
+        sigma = std(data(:, i));
+        for j = 1 : size(data ,1)
+        if k >= 2 && k <= 4        
+            Pi(i) =  sum(data(:, i) < mu - (2*sigma));
+            Qi(i) = sum(data(:, i) > mu +(2*sigma));
+        else
+            Pi(i) =  sum(data(:, i) < mu - (sqrt(20)*sigma));
+            Qi(i) = sum(data(:, i) > mu +(sqrt(20)*sigma));
+        end
+        end
+    end
+    
+    for j = 1 : size(data, 2)
+        tmp = sum(Pi + Qi) / size(data, 2);
+        tmp2 = abs(sum(Pi - Qi) / sum(Pi + Qi));
+        if tmp >0.05 && tmp2 < 0.3
+            out = 
+        end
+    end
+end

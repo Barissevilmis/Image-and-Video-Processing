@@ -1,0 +1,11 @@
+function SI = ex_SI_sevilmis(data)
+    
+    [row, col, ch] = size(data);
+    SI = zeros(row, col);
+    
+    for i = 1:ch
+        res = edge(data(:,:,i),'Sobel');
+        
+    end
+    
+end

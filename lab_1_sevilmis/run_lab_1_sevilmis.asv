@@ -1,0 +1,114 @@
+% Lab 1 - Baris Sevilmis - 25.09.2019
+ 
+%% Exercise 2.1.1 - Read Images and Show Images
+[trees, map_t] = imread('trees.tif');
+[lena,  map_l] = imread('lena.tif');
+figure('Name','Ex-2.1.1: Read and Show');
+subplot(1,4,1);imshow(trees, map_t);
+title('Original Trees');
+subplot(1,4,2);imshow(trees);
+title('Grayscale Trees');
+subplot(1,4,3);imshow(lena);
+title('Original Lena');
+    
+%% Exercise 2.1.2 - Show Images in Gray level- Invert them
+ 
+[row_t, col_t, dim_t] = size(trees);
+[row_l, col_l, dim_l] = size(lena);
+
+%RGB Lena
+if dim_l > 1
+    lena_gr = rgb2gray(lena);
+end
+subplot(1,4,4);imshow(lena_gr);
+title('Greyscale Lena');
+
+lena_gr = double(lena_gr);
+
+%Invert Lena
+lena_inv = double(255) - lena_gr;
+figure('Name','Ex-2.1.2: Grayscale and Invert');
+subplot(2,2,1);imshow(uint8(lena_gr));
+title('Grayscale Lena');
+subplot(2,2,2);imshow(uint8(lena_inv));
+title('Inverted Lena');
+
+%Invert Trees
+trees_inv = uint8(255) - trees;
+subplot(2,2,3);imshow(trees);
+title('Grayscale Trees');
+subplot(2,2,4);imshow(trees_inv);
+title('Inverted Trees');
+
+%% Exercise 2.1.3 - Function for Modifying Color Tables
+
+ex2_3_sevilmis(lena, trees, 0.5, map_t);
+ex2_3_sevilmis(lena, trees, 1, map_t);
+ex2_3_sevilmis(lena, trees, 1.5, map_t);
+ex2_3_sevilmis(lena, trees, 2, map_t);
+
+%% Exercise 2.1.4 - Image of a Chess Board
+
+% True Colors
+pattern_yellow = [255 0; 0 255];
+pattern_blue = [0 255; 255 0];
+
+chess_true = zeros(8,8,3);
+chess_true(:,:,1) = repmat(pattern_yellow, [4 4]);
+chess_true(:,:,2) = repmat(pattern_yellow, [4 4]);
+chess_true(:,:,3) = repmat(pattern_blue, [4 4]);
+
+% Indexed Version
+chess_indexed = zeros(8,8);
+map_indexed = zeros(2,3);
+chess_indexed(:,:) = repmat(pattern_yellow, [4 4]);
+map_indexed(1,:) = [1 1 0];
+map_indexed(2,:) = [0 0 1];
+
+
+figure('Name','Ex-2.1.4: Chess');
+subplot(2,2,1);imshow(chess_true);
+title('True Color Chess');
+subplot(2,2,2);imshow(chess_indexed, map_indexed);
+title('Indexed Chess');
+
+
+%% Exercise 2.2
+
+lena_y = imread('lena-y.png');
+[row_y, col_y, dim_y] = size(lena_y);
+
+%Greyscale Lena
+if  dim_y > 1
+    lena_y_gr = rgb2gray(lena_y);
+else
+    lena_y_gr = lena_y;
+end
+
+figure('Name','Ex-2.2');
+subplot(1,2,1);imshow(lena_y);
+title('Original Lena');
+subplot(1,2,2);imshow(lena_y_gr);
+title('Grayscale Lena');
+
+%Step size and result array
+lena_y_gr = double(lena_y_gr);
+step_size = [1/128.0 1/64.0 32.0 16.0 8.0 4.0 2.0];
+lena_cell = cell(length(step_size),1);
+
+%Quantization
+figure('Name','Ex-2.2: Quantization');
+subplot(2,4,1);imshow(uint8(lena_y_gr));
+title('Non-quantized Lena');
+for i = 1 : length(step_size)
+    lena_cell{i} = double(floor(lena_y_gr ./ step_size(i)));
+    lena_cell{i} = uint8(lena_cell{i} .* step_size(i) + step_size(i)/2.0);
+    subplot(2,4,i+1);imshow(lena_cell{i});
+    title(['Quantization with step size ',num2str(step_size(i))]);
+end
+
+%% Exercise 2.3
+
+col_filter = [];
+
+
